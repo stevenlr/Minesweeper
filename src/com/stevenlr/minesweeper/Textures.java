@@ -2,7 +2,6 @@ package com.stevenlr.minesweeper;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 import javax.imageio.ImageIO;
 
@@ -25,7 +24,7 @@ public class Textures {
 	
 	public static void init() {
 		try {
-			tiles = ImageIO.read(new File("res/tiles.png"));
+			tiles = ImageIO.read(Minesweeper.class.getResourceAsStream("/tiles.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

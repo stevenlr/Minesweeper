@@ -2,7 +2,6 @@ package com.stevenlr.minesweeper;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
@@ -15,7 +14,7 @@ public class Text {
 	
 	public static void init() {
 		try {
-			font = ImageIO.read(new File("res/font.png"));
+			font = ImageIO.read(Minesweeper.class.getResourceAsStream("/font.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

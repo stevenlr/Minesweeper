@@ -33,7 +33,7 @@ public class Minesweeper implements Runnable {
 
 	public void run() {
 		Graphics buffer = display.getBuffer();
-		GameGrid grid = new GameGrid(GameGrid.EASY);
+		GameGrid grid = new GameGrid(GameGrid.MEDIUM);
 		MouseEvent ev;
 		
 		while(true) {

@@ -20,7 +20,10 @@ public class GameGrid {
 	private int hoveredX = 0;
 	private int hoveredY = 0;
 	
-	public GameGrid(int plevel) {
+	public GameGrid() {
+	}
+	
+	public void generate(int plevel) {
 		level = plevel;
 		
 		Random rand = new Random();
@@ -136,7 +139,24 @@ public class GameGrid {
 			openSquare(x + 1, y);
 			openSquare(x, y + 1);
 			openSquare(x, y - 1);
+			openSquareDiag(x - 1, y - 1);
+			openSquareDiag(x - 1, y + 1);
+			openSquareDiag(x + 1, y + 1);
+			openSquareDiag(x + 1, y - 1);
 		}
+	}
+	
+	public void openSquareDiag(int x, int y)
+	{
+		Square s = getSquare(x, y);
+		
+		if(s == null || s.opened)
+			return;
+		
+		if(s.nMinesAround == 0)
+			return;
+		
+		openSquare(x, y);
 	}
 	
 	public void flagSquare(int x, int y) {
@@ -234,5 +254,21 @@ public class GameGrid {
 		squares[7] = getSquare(x - 1, y + 1);
 		
 		return squares;
+	}
+
+	public int countFlags() {
+		int i, c = 0, size = levels[level][0] * levels[level][0];
+		
+		for(i = 0; i < size; i++) {
+			Square s = grid[i];
+			if(s.flag && !s.opened)
+				c++;
+		}
+		
+		return c;
+	}
+
+	public int countMines() {
+		return levels[level][1];
 	}
 }

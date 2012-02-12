@@ -1,7 +1,6 @@
 package com.stevenlr.minesweeper;
 
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 
 public class Minesweeper implements Runnable {
 	
@@ -18,6 +17,9 @@ public class Minesweeper implements Runnable {
 	
 	public int gameState = PLAY;
 	
+	public Screen nextScreen;
+	public Screen currentScreen;
+	
 	public Minesweeper() {
 		display = new Display(WIDTH, HEIGHT, ASPECT);
 		
@@ -27,41 +29,26 @@ public class Minesweeper implements Runnable {
 		Textures.init();
 		Text.init();
 		
+		nextScreen = new MenuScreen(this);
+		currentScreen = null;
+		
 		Thread t = new Thread(this);
 		t.start();
 	}
 
 	public void run() {
 		Graphics buffer = display.getBuffer();
-		GameGrid grid = new GameGrid(GameGrid.MEDIUM);
-		MouseEvent ev;
 		
 		while(true) {
 			
-			grid.setHovered(eventsListener.x, eventsListener.y);
-			
-			
-			while((ev = eventsListener.dequeueMouseEvent()) != null) {
-				int[] clickGrid = grid.getGridFromMouse(ev.getX(), ev.getY());
-				
-				if(clickGrid[0] != -1 && clickGrid[1] != -1) {
-					if(ev.getButton() == MouseEvent.BUTTON1)
-						grid.openSquare(clickGrid[0], clickGrid[1]);
-					if(ev.getButton() == MouseEvent.BUTTON3)
-						grid.flagSquare(clickGrid[0], clickGrid[1]);
-				}
-				
-				gameState = grid.evaluate();
+			if(nextScreen != null) {
+				currentScreen = nextScreen;
+				nextScreen = null;
 			}
 			
-			grid.render(buffer);
-			
-			if(gameState == WIN)
-				Text.print("WIN", 0, 0, buffer);
-			if(gameState == FAIL)
-				Text.print("FAIL", 0, 0, buffer);
-			
+			currentScreen.update(buffer);
 			display.flip();
+			
 			try {
 				Thread.sleep(10);
 			} catch (Exception e) {

@@ -66,6 +66,7 @@ public class Text {
 		letters_pos.put("!", 52);
 		letters_pos.put("?", 53);
 		letters_pos.put("-", 54);
+		letters_pos.put("/", 55);
 		
 		letters_size.put(" ", 3);
 		letters_size.put("A", 4);
@@ -111,6 +112,7 @@ public class Text {
 		letters_size.put("!", 1);
 		letters_size.put("?", 3);
 		letters_size.put("-", 3);
+		letters_size.put("/", 3);
 	}
 	
 	private static void print_letter(String letter, int x, int y, Graphics g) {

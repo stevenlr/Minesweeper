@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 public class Textures {
 	
 	private static BufferedImage tiles;
+	private static BufferedImage logo;
 	
 	public static int SQ = 0;
 	public static int SQ_HOVER = 1;
@@ -25,6 +26,7 @@ public class Textures {
 	public static void init() {
 		try {
 			tiles = ImageIO.read(Minesweeper.class.getResourceAsStream("/tiles.png"));
+			logo = ImageIO.read(Minesweeper.class.getResourceAsStream("/logo.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -34,5 +36,9 @@ public class Textures {
 		int tx = tid % 8;
 		int ty = (tid - tx) / 8;
 		g.drawImage(tiles, x, y, x + 8, y + 8, tx * 8, ty * 8, tx * 8 + 8, ty * 8 + 8, null);
+	}
+	
+	public static void drawLogo(int x, int y, Graphics g) {
+		g.drawImage(logo, x, y, null);
 	}
 }

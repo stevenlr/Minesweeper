@@ -126,6 +126,14 @@ public class GameGrid {
 		return hovered;
 	}
 	
+	public void openAll() {
+		int nSquares = levels[level][0] * levels[level][0];
+		
+		for(int i = 0; i < nSquares; i++) {
+			grid[i].opened = true;
+		}
+	}
+	
 	public void openSquare(int x, int y) {
 		Square s = getSquare(x, y);
 		

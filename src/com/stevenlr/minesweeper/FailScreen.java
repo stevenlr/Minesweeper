@@ -4,13 +4,20 @@ import java.awt.Graphics;
 
 public class FailScreen extends Screen {
 	
-	public FailScreen(Minesweeper game) {
+	private GameScreen gameScreen;
+	
+	public FailScreen(Minesweeper game, GameScreen gameScreen) {
 		super(game);
+		
+		this.gameScreen = gameScreen;
 	}
 	
 	public void update(Graphics buffer) {
-		Text.print("YOU FAILED", 110, 80, buffer);
-		Text.print("CLICK TO CONTINUE", 180, 187, buffer);
+		gameScreen.render(buffer);
+		
+		Text.print("YOU FAILED", 210, 34, buffer);
+		Text.print("CLICK", 224, 175, buffer);
+		Text.print("TO CONTINUE", 205, 187, buffer);
 		
 		boolean restart = false;
 		

@@ -18,6 +18,17 @@ public class GameScreen extends Screen {
 		game.gameState = Minesweeper.PLAY;
 	}
 	
+	public void render(Graphics buffer) {
+		grid.render(buffer);
+		
+		int nFlags = grid.countFlags();
+		
+		Text.print(((Integer) nFlags).toString() 
+				+ "/" 
+				+ ((Integer) grid.countMines()).toString(),
+				227, 20, buffer);
+	}
+	
 	public void update(Graphics buffer) {
 		
 		grid.setHovered(game.eventsListener.x, game.eventsListener.y);
@@ -37,20 +48,15 @@ public class GameScreen extends Screen {
 			game.gameState = grid.evaluate();
 		}
 		
-		grid.render(buffer);
-		
-		int nFlags = grid.countFlags();
-		
-		Text.print(((Integer) nFlags).toString() 
-				+ "/" 
-				+ ((Integer) grid.countMines()).toString(),
-				227, 20, buffer);
+		render(buffer);
 		
 		if(game.gameState == Minesweeper.WIN) {
-			game.nextScreen = new WinScreen(game);
+			grid.openAll();
+			game.nextScreen = new WinScreen(game, this);
 		}
 		else if(game.gameState == Minesweeper.FAIL) {
-			game.nextScreen = new FailScreen(game);
+			grid.openAll();
+			game.nextScreen = new FailScreen(game, this);
 		}
 	}
 }

@@ -2,6 +2,8 @@ package com.stevenlr.minesweeper;
 
 import java.awt.Graphics;
 
+import com.stevenlr.minesweeper.screen.*;
+
 public class Minesweeper implements Runnable {
 	
 	public static int WIDTH = 271;

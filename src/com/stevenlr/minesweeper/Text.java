@@ -137,4 +137,22 @@ public class Text {
 			}
 		}
 	}
+	
+	public static Rect getRect(String str, int x, int y) {
+		int len = str.length();
+		str = str.toUpperCase();
+		int w = 0;
+		
+		for(int i = 0; i < len; i++) {
+			String s = str.substring(i, i + 1);
+			if(letters_size.containsKey(s)) {
+				w += letters_size.get(s);
+				w += 1;
+			}
+		}
+		
+		w--;
+		
+		return new Rect(x, y, w, 6);
+	}
 }

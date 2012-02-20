@@ -20,6 +20,9 @@ public class GameGrid {
 	private int hoveredX = 0;
 	private int hoveredY = 0;
 	
+	private long startTime;
+	private long endTime = -1;
+	
 	public GameGrid() {
 	}
 	
@@ -61,6 +64,12 @@ public class GameGrid {
 					here.nMinesAround++;
 			}
 		}
+		
+		startTime = System.nanoTime();
+	}
+	
+	public void end() {
+		endTime = System.nanoTime();
 	}
 	
 	public int evaluate() {
@@ -126,14 +135,6 @@ public class GameGrid {
 		return hovered;
 	}
 	
-	public void openAll() {
-		int nSquares = levels[level][0] * levels[level][0];
-		
-		for(int i = 0; i < nSquares; i++) {
-			grid[i].opened = true;
-		}
-	}
-	
 	public void openSquare(int x, int y) {
 		Square s = getSquare(x, y);
 		
@@ -176,12 +177,14 @@ public class GameGrid {
 	public void render(Graphics g) {
 		int size = levels[level][0];
 		
+		boolean openAll = endTime != -1;
+		
 		for(int x = 0; x < size; x++) {
 			for(int y = 0; y < size; y++) {
 				Square s = getSquare(x, y);
 				int gx = x * 10 + render_offset; int gy = y * 10 + render_offset;
 				
-				if(!s.opened) {
+				if(!s.opened && !openAll) {
 					if(hovered && x == hoveredX && y == hoveredY) {
 						Textures.draw(Textures.SQ_HOVER, gx, gy, g);
 					}
@@ -228,6 +231,28 @@ public class GameGrid {
 				}
 			}
 		}
+	}
+	
+	public String getTime() {
+		int seconds;
+		
+		if(endTime == -1)
+			seconds = (int) ((System.nanoTime() - startTime) / 1000000000);
+		else
+			seconds = (int) ((endTime - startTime) / 1000000000);
+		
+		int minutes = seconds / 60;
+		
+		seconds -= minutes * 60;
+		
+		String secondsStr = ((Integer) seconds).toString();
+		String minutesStr = ((Integer) minutes).toString();
+		
+		while(secondsStr.length() < 2) {
+			secondsStr = "0" + secondsStr;
+		}
+		
+		return minutesStr + ":" + secondsStr;
 	}
 	
 	private Square getSquare(int sid) {

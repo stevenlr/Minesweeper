@@ -42,7 +42,6 @@ public class Events implements MouseListener, MouseMotionListener {
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		mouseEvents.add(e);
 	}
 	
 	
@@ -56,7 +55,8 @@ public class Events implements MouseListener, MouseMotionListener {
 	public void mouseExited(MouseEvent arg0) {
 	}
 
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent e) {
+		mouseEvents.add(e);
 	}
 
 	public void mouseReleased(MouseEvent arg0) {
